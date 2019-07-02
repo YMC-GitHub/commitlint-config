@@ -1,6 +1,6 @@
 ### download as local module
 ```sh
-npm install --save-dev commitlint-config-yemiancheng @commitlint/cli
+npm install --save-dev commitlint-config-yemiancheng @commitlint/lint
 ```
 
 ### make a configurantion file
@@ -9,9 +9,22 @@ echo "module.exports = {extends: ['commitlint-config-yemiancheng']};" > commitli
 ```
 
 ### run as local module
-```sh
-# with an incorret git commit message
-echo "fix(SCOPE): some message" | ./node_modules/.bin/commitlint
-# with an corret git commit message
-echo "fix(scope): some message" | ./node_modules/.bin/commitlint
+```js
+const load = require('@commitlint/load');
+const lint = require('@commitlint/lint');
+
+const CONFIG = require('./commitlint.config.jss');
+
+load(CONFIG)
+  .then(opts => lint('foo: bar', opts.rules, opts.parserPreset ? {parserOpts: opts.parserPreset.parserOpts} : {}))
+  .then(report => console.log(report));
+  /* =>
+    { valid: false,
+      errors:
+      [ { level: 2,
+          valid: false,
+          name: 'type-enum',
+          message: 'type must be one of [build, chore, ci, docs, feat, fix, perf, refactor, revert, style, test]' } ],
+      warnings: [] }
+    */
 ```
