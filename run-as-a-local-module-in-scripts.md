@@ -5,7 +5,7 @@ npm install --save-dev commitlint-config-yemiancheng @commitlint/lint
 
 ### make a configurantion file
 ```sh
-echo "module.exports = {extends: ['commitlint-config-yemiancheng']};" > commitlint.config.js
+echo "module.exports = {extends: ['yemiancheng']};" > commitlint.config.js
 ```
 
 ### run as local module
